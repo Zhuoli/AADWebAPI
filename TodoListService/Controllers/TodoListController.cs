@@ -29,6 +29,7 @@ using System.Security.Claims;
 namespace TodoListService.Controllers
 {
     // TODO: Protect the TodoListController with JWT Bearer Authentication.
+    [Authorize]
     public class TodoListController : ApiController
     {
         //
@@ -40,7 +41,15 @@ namespace TodoListService.Controllers
         public IEnumerable<TodoItem> Get()
         {
             // TODO: Verify that the "user_impersonation" scope exists in the token.
-
+            // user_impersonation is the default permission exposed by applications in Azure AD
+            if (ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/scope").Value != "user_impersonation")
+            {
+                throw new HttpResponseException(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ReasonPhrase = "The Scope claim does not contain 'user_impersonation' or scope claim not found"
+                });
+            }
             // A user's To Do list is keyed off of the NameIdentifier claim, which contains an immutable, unique identifier for the user.
             Claim subject = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier);
 

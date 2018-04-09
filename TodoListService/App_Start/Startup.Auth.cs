@@ -13,7 +13,13 @@ namespace TodoListService
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // TODO: Configure Authentication for the Web API
+            // Configure Authentication for the Web API
+            app.UseWindowsAzureActiveDirectoryBearerAuthentication(
+            new WindowsAzureActiveDirectoryBearerAuthenticationOptions
+            {
+                Audience = ConfigurationManager.AppSettings["ida:Audience"],
+                Tenant = ConfigurationManager.AppSettings["ida:Tenant"]
+            });
         }
     }
 }
