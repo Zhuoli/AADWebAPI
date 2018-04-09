@@ -6,6 +6,10 @@ AAD App Registrations:
   ## Service APP: "To Do List Service Zhuoli"
   ## Client APP: "TodoListClient"
 
+ You need install nuget package with old version:
+ PM> Install-Package Microsoft.Owin.Security.ActiveDirectory -ProjectName TodoListService -Version 3.1.0
+ PM> Install-Package Microsoft.Owin.Host.SystemWeb -ProjectName TodoListService -Version 3.1.0
+
 
   Link: https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-developers-guide
 
